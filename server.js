@@ -17,7 +17,7 @@ const app = express();
 // de onde as requisições podem vir, em vez de deixar aberto para todos (*).
 const allowedOrigins = [
     'http://localhost:9002', // A porta padrão do seu frontend Next.js
-    'https://9000-firebase-studio-1754571773397.cluster-4xpux6pqdzhrktbhjf2cumyqtg.cloudworkstations.dev' // A URL do seu ambiente de desenvolvimento na nuvem
+    'https://growflow-back.onrender.com' // A URL do seu ambiente de desenvolvimento na nuvem
 ];
 
 const corsOptions = {
@@ -38,7 +38,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Obtém a URI de conexão do MongoDB a partir das variáveis de ambiente
-const db = process.env.MONGO_URI;
+const db = process.env.MONGODB_URI;
 
 // Função para conectar à base de dados
 const connectDB = async () => {
@@ -63,7 +63,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tasks', require('./routes/tasks'));
 
 // Define a porta em que o servidor irá escutar
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT 
 
 // Inicia o servidor
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
