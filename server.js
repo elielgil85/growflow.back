@@ -1,3 +1,14 @@
+process.on('unhandledRejection', (err, promise) => {
+  console.error(`Error: ${err.message}`);
+  // Close server & exit process
+  // server.close(() => process.exit(1));
+});
+
+process.on('uncaughtException', (err, origin) => {
+  console.error(`Caught exception: ${err.message}\n` + `Exception origin: ${origin}`);
+  process.exit(1);
+});
+
 // server.js
 
 // Importa os módulos necessários
@@ -46,8 +57,15 @@ connectDB();
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tasks', require('./routes/tasks'));
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.message);
+  res.status(500).send('Server Error');
+});
+
 // Define a porta em que o servidor irá escutar, com um fallback seguro
 const PORT = process.env.PORT || 5000;
 
 // Inicia o servidor
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
