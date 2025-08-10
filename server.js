@@ -25,7 +25,7 @@ const app = express();
 
 // Configuração do CORS
 const allowedOrigins = [
-  'https://shimmering-mousse-0b2ce4.netlify.app',
+  'https://jovial-cobbler-718b50.netlify.app',
   // Adicione outras origens permitidas aqui, se houver
 ];
 
