@@ -6,33 +6,17 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
-// Carrega as variáveis de ambiente do ficheiro .env na raiz do backend
+// Carrega as variáveis de ambiente do ficheiro .env
 dotenv.config();
 
 // Cria a aplicação Express
 const app = express();
 
-// --- Configuração do CORS ---
-// Define as origens permitidas. É uma boa prática de segurança especificar
-// de onde as requisições podem vir, em vez de deixar aberto para todos (*).
-const allowedOrigins = [
-    'http://localhost:9002', // A porta padrão do seu frontend Next.js
-    'https://shimmering-mousse-0b2ce4.netlify.app' // A URL do seu ambiente de desenvolvimento na nuvem
-];
-
-const corsOptions = {
-    origin: function (origin, callback) {
-        // Permite requisições sem 'origin' (ex: Postman, apps mobile) ou se a origem estiver na lista.
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-};
-
-// Middleware para permitir Cross-Origin Resource Sharing (CORS) com as opções definidas
-app.use(cors(corsOptions));
+// --- Configuração do CORS para TESTE ---
+// Permite requisições de qualquer origem.
+// Isso deve ser usado APENAS para desenvolvimento e testes.
+// Em produção, a abordagem anterior, com allowedOrigins, é mais segura.
+app.use(cors());
 
 // Middleware para fazer o "parsing" do corpo dos pedidos em formato JSON
 app.use(express.json());
@@ -62,8 +46,8 @@ connectDB();
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tasks', require('./routes/tasks'));
 
-// Define a porta em que o servidor irá escutar
-const PORT = process.env.PORT 
+// Define a porta em que o servidor irá escutar, com um fallback seguro
+const PORT = process.env.PORT || 5000;
 
 // Inicia o servidor
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
