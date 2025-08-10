@@ -17,7 +17,7 @@ const app = express();
 // de onde as requisições podem vir, em vez de deixar aberto para todos (*).
 const allowedOrigins = [
     'http://localhost:9002', // A porta padrão do seu frontend Next.js
-    'https://growflow-back.onrender.com' // A URL do seu ambiente de desenvolvimento na nuvem
+    'https://shimmering-mousse-0b2ce4.netlify.app/' // A URL do seu ambiente de desenvolvimento na nuvem
 ];
 
 const corsOptions = {
