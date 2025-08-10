@@ -23,11 +23,26 @@ dotenv.config();
 // Cria a aplicação Express
 const app = express();
 
-// --- Configuração do CORS para TESTE ---
-// Permite requisições de qualquer origem.
-// Isso deve ser usado APENAS para desenvolvimento e testes.
-// Em produção, a abordagem anterior, com allowedOrigins, é mais segura.
-app.use(cors());
+// Configuração do CORS
+const allowedOrigins = [
+  'https://shimmering-mousse-0b2ce4.netlify.app',
+  // Adicione outras origens permitidas aqui, se houver
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Permite requisições sem origem (como de ferramentas como Postman ou curl)
+    // ou de origens na lista de permitidos.
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Permite o envio de cookies de credenciais
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos HTTP permitidos
+  allowedHeaders: 'Content-Type,Authorization,x-auth-token', // Cabeçalhos permitidos
+}));
 
 // Middleware para fazer o "parsing" do corpo dos pedidos em formato JSON
 app.use(express.json());
