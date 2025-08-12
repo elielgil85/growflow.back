@@ -26,6 +26,7 @@ const app = express();
 // Configuração do CORS
 const allowedOrigins = [
   'https://jovial-cobbler-718b50.netlify.app',
+  'https://growflow.yxznet.com'
   // Adicione outras origens permitidas aqui, se houver
 ];
 
